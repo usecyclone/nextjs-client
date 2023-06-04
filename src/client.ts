@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { identityMiddleware, nextJsMiddlewareWrapper } from "./middleware"
 import { PostHog } from 'posthog-node'
 import { fetch } from "./fetch"
-// import { machineIdSync } from 'node-machine-id';
 
 const CYCLONE_POSTHOG_ADDRESS = 'http://ph.usecyclone.dev'
 
@@ -10,26 +9,21 @@ const CYCLONE_POSTHOG_ADDRESS = 'http://ph.usecyclone.dev'
 export default class Client {
     projectId: string
     posthogClient: PostHog
-    machineId: string
 
     constructor(projectId: string, apiKey: string) {
         this.projectId = projectId
         this.posthogClient = new PostHog(apiKey, {
             host: CYCLONE_POSTHOG_ADDRESS,
             fetch: fetch,
-            flushInterval: 1000,
         })
-
-        // TODO: consider hashing by project ID
-        this.machineId = "abc" // TODO
     }
 
-    nextJsMiddleware(req: NextRequest) {
-        return nextJsMiddlewareWrapper(identityMiddleware, this.posthogClient, this.machineId)(req)
+    nextJsMiddleware(pathPrefixFilterList?: string[]) {
+        return nextJsMiddlewareWrapper(identityMiddleware, this.posthogClient, this.projectId, pathPrefixFilterList)
     }
 
-    wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined) {
-        return nextJsMiddlewareWrapper(middleware, this.posthogClient, this.machineId)
+    wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]) {
+        return nextJsMiddlewareWrapper(middleware, this.posthogClient, this.projectId, pathPrefixFilterList)
     }
 
     async shutdownAsync() {
