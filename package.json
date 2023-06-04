@@ -1,7 +1,7 @@
 {
-  "name": "cyclone-node",
+  "name": "cyclone-nextjs",
   "version": "1.0.0",
-  "description": "Cyclone node.js SDK",
+  "description": "Cyclone next.js SDK",
   "main": "lib/client.js",
   "types": "lib/client.d.js",
   "type": "module",
@@ -21,7 +21,6 @@
     "@types/node": "^20.2.5",
     "@vespaiach/axios-fetch-adapter": "^0.3.1",
     "next": "^13.2.0",
-    "node-machine-id": "^1.1.12",
     "posthog-node": "^3.1.1"
   },
   "devDependencies": {
