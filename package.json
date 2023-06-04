@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/usecyclone/js-client/issues"
   },
-  "homepage": "https://www.usecyclone.dev"
+  "homepage": "https://www.usecyclone.dev",
+  "dependencies": {
+    "next": "^13.4.4"
+  }
 }
