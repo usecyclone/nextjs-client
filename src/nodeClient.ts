@@ -24,6 +24,7 @@ export default class NodeClient {
     getSignalHandler(signal: String) {
         return () => {
             // this.posthogClient.capture()
+            console.log("CYCLONE SIGNAL HANDLER:", signal)
             this.shutdown()
         };
     }

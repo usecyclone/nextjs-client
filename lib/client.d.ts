@@ -1,2 +1,4 @@
 import Client from "./nextJsClient";
-export { Client as NextJsClient };
+import NodeClient from "./nodeClient";
+export { Client as NextJsClient, NodeClient };
+export default NodeClient;
