@@ -22,11 +22,6 @@ export default class Client {
 
         // TODO: consider hashing by project ID
         this.machineId = "abc" // TODO
-
-        this.posthogClient.on("error", (err) => {
-            // Whatever handling you want
-            console.error("PostHog had an error!", err)
-        })
     }
 
     nextJsMiddleware(req: NextRequest) {

@@ -32,8 +32,6 @@ export function nextJsMiddlewareWrapper(
             properties: metadata,
         })
 
-        console.log(metadata)
-
         return response
     }
 }
