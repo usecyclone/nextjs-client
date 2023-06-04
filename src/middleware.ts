@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { PostHog } from 'posthog-node'
 
-export function nextJsMiddlewareWrapper(middleware: (req: NextRequest) => NextResponse | undefined): (req: NextRequest) => NextResponse | undefined {
+export function nextJsMiddlewareWrapper(
+    middleware: (req: NextRequest) => NextResponse | undefined,
+    posthog: PostHog,
+    machineId: string
+): (req: NextRequest) => NextResponse | undefined {
     return (req: NextRequest) => {
 
         const url = req.nextUrl;
@@ -21,7 +26,11 @@ export function nextJsMiddlewareWrapper(middleware: (req: NextRequest) => NextRe
             metadata["status"] = response.status
         }
 
-        // TODO: send to posthog
+        posthog.capture({
+            distinctId: "abc",
+            event: "next_js_middleware_request",
+            properties: metadata,
+        })
 
         return response
     }
