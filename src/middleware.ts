@@ -13,10 +13,10 @@ export function nextJsMiddlewareWrapper(
 
         const metadata: {
             pathname: string,
-            status: number | undefined,
+            status: number,
         } = {
             pathname: pathname,
-            status: undefined,
+            status: 0,
         }
 
         const response = middleware(req)
@@ -31,6 +31,8 @@ export function nextJsMiddlewareWrapper(
             event: "next_js_middleware_request",
             properties: metadata,
         })
+
+        console.log(metadata)
 
         return response
     }

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { identityMiddleware, nextJsMiddlewareWrapper } from "./middleware"
 import { PostHog } from 'posthog-node'
-import { machineIdSync } from 'node-machine-id';
+import { fetch } from "./fetch"
+// import { machineIdSync } from 'node-machine-id';
 
-const CYCLONE_POSTHOG_ADDRESS = 'https://ph.usecyclone.dev'
+const CYCLONE_POSTHOG_ADDRESS = 'http://ph.usecyclone.dev'
 
 // Cyclone analytics client
 export default class Client {
@@ -14,10 +15,18 @@ export default class Client {
     constructor(projectId: string, apiKey: string) {
         this.projectId = projectId
         this.posthogClient = new PostHog(apiKey, {
-            host: CYCLONE_POSTHOG_ADDRESS
+            host: CYCLONE_POSTHOG_ADDRESS,
+            fetch: fetch,
+            flushInterval: 1000,
         })
+
         // TODO: consider hashing by project ID
-        this.machineId = machineIdSync(true)
+        this.machineId = "abc" // TODO
+
+        this.posthogClient.on("error", (err) => {
+            // Whatever handling you want
+            console.error("PostHog had an error!", err)
+        })
     }
 
     nextJsMiddleware(req: NextRequest) {
