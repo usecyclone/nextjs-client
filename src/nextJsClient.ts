@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { identityMiddleware, nextJsMiddlewareWrapper } from "./middleware"
 import { PostHog } from 'posthog-node'
 import { fetch } from "./fetch"
-
-const CYCLONE_POSTHOG_ADDRESS = 'http://ph.usecyclone.dev'
+import { CYCLONE_POSTHOG_ADDRESS } from "./constants"
 
 // Cyclone analytics client for Next.JS edge runtime
 export default class Client {
