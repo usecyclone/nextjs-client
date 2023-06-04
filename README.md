@@ -1,3 +1,3 @@
-# js-client
+# nextjs-client
 
-Cyclone SDK for node.js
+Cyclone SDK for next.js
