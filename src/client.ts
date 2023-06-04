@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { identityMiddleware, nextJsMiddlewareWrapper } from "./middleware";
 
 // Cyclone analytics client
-class Client {
+export default class Client {
     projectId: string
     apiKey: string
 

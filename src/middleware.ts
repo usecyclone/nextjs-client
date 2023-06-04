@@ -6,13 +6,18 @@ export function nextJsMiddlewareWrapper(middleware: (req: NextRequest) => NextRe
         const url = req.nextUrl;
         const { pathname } = url;
 
-        const metadata = {
+        const metadata: {
+            pathname: string,
+            status: number | undefined,
+        } = {
             pathname: pathname,
+            status: undefined,
         }
 
         const response = middleware(req)
 
         if (response) {
+            // @ts-ignore
             metadata["status"] = response.status
         }
 
