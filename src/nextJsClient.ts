@@ -14,6 +14,8 @@ export default class Client {
         this.posthogClient = new PostHog(apiKey, {
             host: CYCLONE_POSTHOG_ADDRESS,
             fetch: fetch,
+            flushAt: 1,
+            flushInterval: 1000,
         })
     }
 
