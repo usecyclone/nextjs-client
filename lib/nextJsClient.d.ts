@@ -4,8 +4,8 @@ export default class Client {
     projectId: string;
     posthogClient: PostHog;
     constructor(projectId: string, apiKey: string);
-    nextJsMiddleware(pathPrefixFilterList?: string[]): (req: NextRequest) => NextResponse<unknown> | undefined;
-    wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]): (req: NextRequest) => NextResponse<unknown> | undefined;
+    nextJsMiddleware(pathPrefixFilterList?: string[]): (req: NextRequest, event: import("next/server").NextFetchEvent) => any;
+    wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]): (req: NextRequest, event: import("next/server").NextFetchEvent) => any;
     shutdownAsync(): Promise<void>;
     shutdown(): void;
 }
