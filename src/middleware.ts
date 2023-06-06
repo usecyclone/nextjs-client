@@ -6,6 +6,7 @@ export function nextJsMiddlewareWrapper(
     middleware: NextMiddleware,
     posthog: PostHog,
     projectId: string,
+    machineId: string,
     // pathPrefixFilterList is used to filter out requests by path name
     // requests that match the filter will not emit any metrics
     pathPrefixFilterList?: string[]
@@ -29,11 +30,13 @@ export function nextJsMiddlewareWrapper(
             pathname: string,
             status: number,
             projectId: string,
+            machineId: string,
         } = {
             pathname: pathname,
             projectId: projectId,
             status: 0,
             browserId: browserId,
+            machineId: machineId,
         }
 
         const response = middleware(req, event)

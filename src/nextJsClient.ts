@@ -4,10 +4,13 @@ import { PostHog } from 'posthog-node'
 import { fetch } from "./fetch"
 import { CYCLONE_POSTHOG_ADDRESS } from "./constants"
 
+const CYCLONE_MACHINE_ID_ENV_VAR = "CYCLONE_MACHINE_ID"
+
 // Cyclone analytics client for Next.JS edge runtime
 export default class Client {
     projectId: string
     posthogClient: PostHog
+    machineId: string
 
     constructor(projectId: string, apiKey: string) {
         this.projectId = projectId
@@ -17,14 +20,19 @@ export default class Client {
             flushAt: 1,
             flushInterval: 1000,
         })
+
+        // Next.JS does not allow machine ID access from Edge Runtime
+        // so we load it with best effort from env var
+        // This env var is usually set by Cyclone node client
+        this.machineId = process.env[CYCLONE_MACHINE_ID_ENV_VAR] ?? "unknown"
     }
 
     nextJsMiddleware(pathPrefixFilterList?: string[]) {
-        return nextJsMiddlewareWrapper(identityMiddleware, this.posthogClient, this.projectId, pathPrefixFilterList)
+        return nextJsMiddlewareWrapper(identityMiddleware, this.posthogClient, this.projectId, this.machineId, pathPrefixFilterList)
     }
 
     wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]) {
-        return nextJsMiddlewareWrapper(middleware, this.posthogClient, this.projectId, pathPrefixFilterList)
+        return nextJsMiddlewareWrapper(middleware, this.posthogClient, this.projectId, this.machineId, pathPrefixFilterList)
     }
 
     async shutdownAsync() {
