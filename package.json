@@ -1,6 +1,6 @@
 {
   "name": "cyclone-nextjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cyclone next.js SDK",
   "main": "lib/client.js",
   "types": "lib/client.d.js",
