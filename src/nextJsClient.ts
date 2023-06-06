@@ -4,8 +4,6 @@ import { PostHog } from 'posthog-node'
 import { fetch } from "./fetch"
 import { CYCLONE_POSTHOG_ADDRESS } from "./constants"
 
-const CYCLONE_MACHINE_ID_ENV_VAR = "CYCLONE_MACHINE_ID"
-
 // Cyclone analytics client for Next.JS edge runtime
 export default class Client {
     projectId: string
@@ -24,7 +22,7 @@ export default class Client {
         // Next.JS does not allow machine ID access from Edge Runtime
         // so we load it with best effort from env var
         // This env var is usually set by Cyclone node client
-        this.machineId = process.env[CYCLONE_MACHINE_ID_ENV_VAR] ?? "unknown"
+        this.machineId = process.env.NEXT_PUBLIC_CYCLONE_MACHINE_ID ?? "unknown"
     }
 
     nextJsMiddleware(pathPrefixFilterList?: string[]) {
