@@ -9,6 +9,7 @@ export default class Client {
     projectId: string
     posthogClient: PostHog
     machineId: string
+    doNotTrack: boolean
 
     constructor(projectId: string, apiKey: string) {
         this.projectId = projectId
@@ -23,13 +24,23 @@ export default class Client {
         // so we load it with best effort from env var
         // This env var is usually set by Cyclone node client
         this.machineId = process.env.NEXT_PUBLIC_CYCLONE_MACHINE_ID ?? "unknown"
+
+        this.doNotTrack = process.env.NEXT_PUBLIC_CYCLONE_DO_NOT_TRACK !== undefined
     }
 
     nextJsMiddleware(pathPrefixFilterList?: string[]) {
+        if (this.doNotTrack) {
+            return identityMiddleware
+        }
+
         return nextJsMiddlewareWrapper(identityMiddleware, this.posthogClient, this.projectId, this.machineId, pathPrefixFilterList)
     }
 
     wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]) {
+        if (this.doNotTrack) {
+            return middleware
+        }
+
         return nextJsMiddlewareWrapper(middleware, this.posthogClient, this.projectId, this.machineId, pathPrefixFilterList)
     }
 
