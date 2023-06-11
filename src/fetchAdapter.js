@@ -33,12 +33,12 @@ export default async function fetchAdapter (config) {
 
   if (config.timeout && config.timeout > 0) {
     promiseChain.push(
-      new Promise((res) => {
+      new Promise((resolve) => {
         setTimeout(() => {
           const message = config.timeoutErrorMessage
             ? config.timeoutErrorMessage
             : 'timeout of ' + config.timeout + 'ms exceeded'
-          res(createError(message, config, 'ECONNABORTED', request))
+          resolve(createError(message, config, 'ECONNABORTED', request))
         }, config.timeout)
       })
     )

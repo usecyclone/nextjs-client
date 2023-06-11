@@ -41,7 +41,7 @@ export function nextJsMiddlewareWrapper (
 
     const response = middleware(req, event)
 
-    if (response) {
+    if (response != null) {
       metadata.status = response.status
     }
 
@@ -55,6 +55,6 @@ export function nextJsMiddlewareWrapper (
   }
 }
 
-export const identityMiddleware = (req: NextRequest, event: NextFetchEvent) => {
+export const identityMiddleware = (req: NextRequest, event: NextFetchEvent): NextMiddlewareResult => {
   return NextResponse.next()
 }

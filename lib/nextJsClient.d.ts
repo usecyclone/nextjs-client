@@ -1,4 +1,4 @@
-import { type NextRequest, type NextResponse } from 'next/server';
+import type { NextMiddleware, NextRequest, NextResponse } from 'next/server';
 import { PostHog } from 'posthog-node';
 export default class Client {
     projectId: string;
@@ -6,8 +6,8 @@ export default class Client {
     machineId: string;
     doNotTrack: boolean;
     constructor(projectId: string, apiKey: string);
-    nextJsMiddleware(pathPrefixFilterList?: string[]): (req: NextRequest, event: import("next/server").NextFetchEvent) => any;
-    wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]): (req: NextRequest, event: import("next/server").NextFetchEvent) => any;
+    nextJsMiddleware(pathPrefixFilterList?: string[]): NextMiddleware;
+    wrapNextJsMiddleware(middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]): NextMiddleware;
     shutdownAsync(): Promise<void>;
     shutdown(): void;
 }

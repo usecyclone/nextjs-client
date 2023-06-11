@@ -1,4 +1,4 @@
-import { type NextRequest, type NextResponse } from 'next/server'
+import type { NextMiddleware, NextRequest, NextResponse } from 'next/server'
 import { identityMiddleware, nextJsMiddlewareWrapper } from './middleware'
 import { PostHog } from 'posthog-node'
 import { fetch } from './fetch'
@@ -28,7 +28,7 @@ export default class Client {
     this.doNotTrack = process.env.NEXT_PUBLIC_CYCLONE_DO_NOT_TRACK !== undefined
   }
 
-  nextJsMiddleware (pathPrefixFilterList?: string[]) {
+  nextJsMiddleware (pathPrefixFilterList?: string[]): NextMiddleware {
     if (this.doNotTrack) {
       return identityMiddleware
     }
@@ -36,7 +36,7 @@ export default class Client {
     return nextJsMiddlewareWrapper(identityMiddleware, this.posthogClient, this.projectId, this.machineId, pathPrefixFilterList)
   }
 
-  wrapNextJsMiddleware (middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]) {
+  wrapNextJsMiddleware (middleware: (req: NextRequest) => NextResponse | undefined, pathPrefixFilterList?: string[]): NextMiddleware {
     if (this.doNotTrack) {
       return middleware
     }
@@ -44,11 +44,11 @@ export default class Client {
     return nextJsMiddlewareWrapper(middleware, this.posthogClient, this.projectId, this.machineId, pathPrefixFilterList)
   }
 
-  async shutdownAsync () {
+  async shutdownAsync (): Promise<void> {
     await this.posthogClient.shutdownAsync()
   }
 
-  shutdown () {
+  shutdown (): void {
     this.posthogClient.shutdown()
   }
 }
