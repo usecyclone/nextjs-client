@@ -1,5 +1,5 @@
 import { PostHogFetchOptions, PostHogFetchResponse } from 'posthog-node/lib/posthog-core/src'
-import fetchAdapter from '../lib/fetchAdapter'
+import fetchAdapter from './fetchAdapter'
 import axios from 'axios'
 
 // Next.js middleware does not support axios

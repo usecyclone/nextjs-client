@@ -1,5 +1,6 @@
-// original library: @vespaiach/axios-fetch-adapter
-
-import { AxiosRequestConfig, AxiosPromise } from 'axios';
-
-export default function fetchAdapter(config: AxiosRequestConfig): AxiosPromise;
+/**
+ * - Create a request object
+ * - Get response body
+ * - Check if timeout
+ */
+export default function fetchAdapter(config: any): Promise<any>;
