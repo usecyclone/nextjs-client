@@ -1,2 +1,2 @@
-import Client from "./nextJsClient";
+import Client from './nextJsClient';
 export { Client as NextJsClient };

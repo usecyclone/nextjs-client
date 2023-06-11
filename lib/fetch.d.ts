@@ -1,2 +1,2 @@
-import { PostHogFetchOptions, PostHogFetchResponse } from 'posthog-node/lib/posthog-core/src';
+import { type PostHogFetchOptions, type PostHogFetchResponse } from 'posthog-node/lib/posthog-core/src';
 export declare const fetch: (url: string, options: PostHogFetchOptions) => Promise<PostHogFetchResponse>;

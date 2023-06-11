@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, type NextResponse } from 'next/server';
 import { PostHog } from 'posthog-node';
 export default class Client {
     projectId: string;
